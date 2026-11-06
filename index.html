@@ -1,0 +1,715 @@
+<html lang="pt-BR"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f7fc">
+  <title>quem não faz o que o site manda e gay</title>
+  <style>
+    /* Troque estas variáveis para personalizar as cores da página. */
+    :root {
+      color-scheme: light;
+      --ink: #17213b;
+      --muted: #68728b;
+      --line: #e4e8f1;
+      --brand: #5545d8;
+      --brand-dark: #3829a9;
+      --surface: #ffffff;
+      --page: #f5f7fc;
+      --card-start: #242653;
+      --card-end: #6254dc;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse at 82% 0%, rgba(112, 98, 228, .10), transparent 34rem),
+        var(--page);
+    }
+
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+
+    .page-shell {
+      width: min(1120px, calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      height: 82px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid rgba(220, 225, 237, .8);
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--ink);
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-decoration: none;
+    }
+
+    /* Substitua o símbolo e o nome pela logo da sua marca. */
+    .logo-symbol {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 11px;
+      color: #fff;
+      background: linear-gradient(145deg, #8274ff, var(--brand-dark));
+      font-size: 17px;
+      letter-spacing: 0;
+      box-shadow: 0 5px 12px rgba(70, 55, 190, .2);
+    }
+
+    main { padding: 54px 0 36px; }
+
+    .intro {
+      max-width: 670px;
+      margin: 0 auto 34px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin: 0 0 13px;
+      color: var(--brand);
+      font-size: 11px;
+      font-weight: 750;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #7d70f2;
+      content: "";
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 43px);
+      line-height: 1.15;
+      letter-spacing: -.045em;
+    }
+
+    .subtitle {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(340px, .92fr);
+      align-items: start;
+      gap: 30px;
+      max-width: 1010px;
+      margin: 0 auto;
+    }
+
+    .preview-panel, .editor-panel {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--surface);
+      box-shadow: 0 12px 38px rgba(38, 48, 82, .055);
+    }
+
+    .preview-panel {
+      min-height: 390px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
+      overflow: hidden;
+    }
+
+    .preview-label {
+      align-self: flex-start;
+      margin: 0 0 19px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 650;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .card-scene {
+      width: min(100%, 410px);
+      aspect-ratio: 1.586;
+      perspective: 1100px;
+    }
+
+    .card-rotator {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform .55s ease;
+    }
+
+    .card-rotator.is-flipped { transform: rotateY(180deg); }
+
+    .credit-card {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: clamp(21px, 5vw, 30px);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .18);
+      border-radius: 19px;
+      color: #fff;
+      background:
+        radial-gradient(ellipse at 93% 8%, rgba(172, 164, 255, .47), transparent 33%),
+        radial-gradient(ellipse at 5% 100%, rgba(74, 160, 226, .22), transparent 42%),
+        linear-gradient(132deg, var(--card-start), var(--card-end));
+      box-shadow: 0 20px 36px rgba(49, 42, 127, .27);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
+    .credit-card::after {
+      position: absolute;
+      right: -48px;
+      bottom: -105px;
+      width: 235px;
+      height: 235px;
+      border: 1px solid rgba(255, 255, 255, .13);
+      border-radius: 50%;
+      box-shadow: 0 0 0 24px rgba(255, 255, 255, .035), 0 0 0 50px rgba(255, 255, 255, .025);
+      content: "";
+      pointer-events: none;
+    }
+
+    .card-back { transform: rotateY(180deg); }
+
+    .card-top, .card-bottom, .card-holder-row {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .card-brand-name {
+      font-size: 16px;
+      font-style: italic;
+      font-weight: 800;
+      letter-spacing: .04em;
+    }
+
+    .card-chip {
+      width: 39px;
+      height: 29px;
+      border: 1px solid rgba(255, 255, 255, .47);
+      border-radius: 7px;
+      background:
+        linear-gradient(90deg, transparent 47%, rgba(67, 59, 126, .25) 48%, rgba(67, 59, 126, .25) 52%, transparent 53%),
+        linear-gradient(0deg, transparent 46%, rgba(67, 59, 126, .25) 47%, rgba(67, 59, 126, .25) 53%, transparent 54%),
+        linear-gradient(135deg, #e8dfb2, #bba96b);
+      box-shadow: inset 0 0 0 4px rgba(255, 255, 255, .2);
+    }
+
+    .card-number {
+      position: relative;
+      z-index: 1;
+      margin: auto 0 17px;
+      font-size: clamp(17px, 3vw, 22px);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: .105em;
+      white-space: nowrap;
+    }
+
+    .card-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      min-width: 0;
+    }
+
+    .card-meta-label {
+      color: rgba(255, 255, 255, .65);
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .card-meta-value {
+      max-width: 205px;
+      overflow: hidden;
+      font-size: 12px;
+      font-weight: 650;
+      letter-spacing: .07em;
+      text-overflow: ellipsis;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .magnetic-stripe {
+      height: 39px;
+      margin: 0 calc(clamp(21px, 5vw, 30px) * -1);
+      background: rgba(15, 17, 43, .76);
+    }
+
+    .back-details {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .signature {
+      min-height: 36px;
+      padding: 9px 12px;
+      overflow: hidden;
+      border-radius: 4px;
+      color: #343455;
+      background: rgba(255, 255, 255, .85);
+      font-size: 11px;
+      font-style: italic;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .cvv-value {
+      min-width: 37px;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-align: right;
+    }
+
+    .back-note {
+      position: relative;
+      z-index: 1;
+      margin: auto 0 0;
+      color: rgba(255, 255, 255, .73);
+      font-size: 9px;
+    }
+
+    .flip-button, .action-button {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 16px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      color: var(--ink);
+      background: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      transition: border-color .15s ease, background .15s ease, transform .15s ease;
+    }
+
+    .flip-button { margin-top: 25px; }
+    .flip-button:hover, .action-button:hover { border-color: #b7b0f2; background: #faf9ff; }
+    .flip-button:active, .action-button:active { transform: translateY(1px); }
+    button:focus-visible, input:focus-visible, select:focus-visible {
+      outline: 3px solid rgba(85, 69, 216, .25);
+      outline-offset: 2px;
+    }
+
+    .editor-panel { padding: 25px; }
+
+    .editor-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 21px;
+    }
+
+    .editor-heading h2 {
+      margin: 0;
+      font-size: 17px;
+      letter-spacing: -.02em;
+    }
+
+    .editor-heading p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .demo-badge {
+      flex: 0 0 auto;
+      padding: 6px 9px;
+      border-radius: 20px;
+      color: #5142be;
+      background: #f0efff;
+      font-size: 10px;
+      font-weight: 750;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px 13px;
+    }
+
+    .field { min-width: 0; }
+    .field-wide { grid-column: 1 / -1; }
+
+    .field label {
+      display: block;
+      margin-bottom: 7px;
+      color: #3e4862;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .field input, .field select {
+      width: 100%;
+      height: 42px;
+      padding: 0 11px;
+      border: 1px solid #dfe4ee;
+      border-radius: 9px;
+      color: var(--ink);
+      background: #fff;
+      font-size: 13px;
+      transition: border-color .15s ease, box-shadow .15s ease;
+    }
+
+    .field input::placeholder { color: #a0a8b8; }
+    .field input:focus, .field select:focus {
+      border-color: #8175e8;
+      box-shadow: 0 0 0 3px rgba(85, 69, 216, .09);
+      outline: none;
+    }
+
+    .field-hint {
+      margin: 6px 0 0;
+      color: #808aa0;
+      font-size: 10px;
+      line-height: 1.4;
+    }
+
+    .editor-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 20px;
+    }
+
+    .action-primary {
+      border-color: var(--brand);
+      color: #fff;
+      background: var(--brand);
+    }
+
+    .action-primary:hover { border-color: var(--brand-dark); background: var(--brand-dark); }
+    .action-button svg { width: 15px; height: 15px; }
+
+    .privacy-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin: 16px 0 0;
+      padding: 11px 12px;
+      border-radius: 10px;
+      color: #606b82;
+      background: #f6f7fb;
+      font-size: 10px;
+      line-height: 1.5;
+    }
+
+    .privacy-note strong { color: #3d4962; }
+
+    footer {
+      padding: 15px 0 28px;
+      color: #7a849a;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    @media (max-width: 760px) {
+      .page-shell { width: min(100% - 32px, 560px); }
+      .site-header { height: 68px; }
+      main { padding: 37px 0 30px; }
+      .intro { margin-bottom: 27px; }
+      .workspace { grid-template-columns: 1fr; gap: 17px; }
+      .preview-panel { min-height: unset; padding: 22px 18px; }
+      .preview-label { margin-bottom: 15px; }
+      .card-scene { width: min(100%, 410px); }
+      .flip-button { margin-top: 20px; }
+      .editor-panel { padding: 21px 18px; }
+    }
+
+    @media (max-width: 390px) {
+      .page-shell { width: calc(100% - 24px); }
+      .preview-panel { padding: 19px 13px; }
+      .credit-card { padding: 18px; border-radius: 15px; }
+      .card-number { font-size: 16px; letter-spacing: .075em; }
+      .magnetic-stripe { margin-right: -18px; margin-left: -18px; }
+      .editor-actions .action-button { flex: 1 1 130px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <div class="logo" aria-label="Nexo">
+        <span class="logo-symbol" aria-hidden="true">n</span>
+        <span>SEXO</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow">Seja bem-vindo</p>
+        <h1 id="page-title">vemos o seu futuro</h1>
+        <p class="subtitle">faça o cadastro e descubra o que procura
+          
+        </p>
+      </section>
+
+      <section class="workspace" aria-label="Prévia e edição do cartão">
+        <div class="preview-panel">
+          <p class="preview-label">Verifica se ta certo, cuzão</p>
+          <div class="card-scene">
+            <div class="card-rotator is-flipped" id="cardRotator">
+              <article class="credit-card card-front" aria-label="Frente do cartão">
+                <div class="card-top">
+                  <span class="card-chip" aria-hidden="true"></span>
+                  <span class="card-brand-name" id="frontBrand">ELO</span>
+                </div>
+                <p class="card-number" id="cardNumber">0000 3640 3476 6991</p>
+                <div class="card-bottom">
+                  <div class="card-meta">
+                    <span class="card-meta-label">Titular</span>
+                    <span class="card-meta-value" id="cardHolder">Camila Rocha</span>
+                  </div>
+                  <div class="card-meta">
+                    <span class="card-meta-label">Validade</span>
+                    <span class="card-meta-value" id="cardExpiry">07/30</span>
+                  </div>
+                </div>
+              </article>
+              <article class="credit-card card-back" aria-label="Verso do cartão">
+                <div class="card-top">
+                  <span class="card-brand-name">NEXO</span>
+                </div>
+                <div class="magnetic-stripe" aria-hidden="true"></div>
+                <div class="back-details">
+                  <div class="card-meta">
+                    <span class="card-meta-label">Apelido do cartão</span>
+                    <span class="signature" id="cardNickname">Cartão viagem</span>
+                  </div>
+                  <div class="card-meta">
+                    <span class="card-meta-label">CVV</span>
+                    <span class="cvv-value" id="cardCvv">979</span>
+                  </div>
+                </div>
+                <p class="back-note">.</p>
+              </article>
+            </div>
+          </div>
+          <button class="flip-button" id="flipButton" type="button" aria-pressed="true" aria-label="Mostrar frente do cartão">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M20 7v5h-5M4 17v-5h5m10-1a7 7 0 0 0-12-4L4 12m16 0-3 5a7 7 0 0 1-12-4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            Virar cartão
+          </button>
+        </div>
+
+        <section class="editor-panel" aria-labelledby="editor-title">
+          <div class="editor-heading">
+            <div>
+              <h2 id="editor-title">Sistema para logar depois e ver mais</h2>
+              <p>edite os dados e confere se ta certo ou zé buceta</p>
+            </div>
+            
+          </div>
+
+          <div class="field-grid">
+            <div class="field field-wide">
+              <label for="holderInput">Nome do titular</label>
+              <input id="holderInput" type="text" maxlength="26" placeholder="Ex.: Alex Silva" autocomplete="off">
+            </div>
+            <div class="field field-wide">
+              <label for="numberInput">Número do cartão</label>
+              <input id="numberInput" type="text" inputmode="numeric" maxlength="19" placeholder="0000 0000 0000 0000" autocomplete="off" aria-describedby="numberHint">
+              <p class="field-hint" id="numberHint">Use apenas números fictícios. A prévia agrupa os dígitos automaticamente.</p>
+            </div>
+            <div class="field">
+              <label for="expiryInput">Validade</label>
+              <input id="expiryInput" type="text" inputmode="numeric" maxlength="5" placeholder="MM/AA" autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="brandInput">Bandeira</label>
+              <select id="brandInput">
+                <option value="Genérico">Genérico</option>
+                <option value="Visa">Visa</option>
+                <option value="Mastercard">Mastercard</option>
+                <option value="Elo">Elo</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="cvvInput">CVV</label>
+              <input id="cvvInput" type="text" inputmode="numeric" maxlength="3" placeholder="•••" autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="nicknameInput">Apelido do cartão</label>
+              <input id="nicknameInput" type="text" maxlength="24" placeholder="Ex.: Cartão viagem" autocomplete="off">
+            </div>
+          </div>
+
+          <div class="editor-actions">
+            
+            <button class="action-button" id="clearButton" type="button">
+              Limpar
+            </button>
+          </div>
+
+          
+        </section>
+      </section>
+    </main>
+
+    <footer>Demonstração — dados fictícios, nada é salvo.</footer>
+  </div>
+
+  <script>
+    const fields = {
+      holder: document.querySelector("#holderInput"),
+      number: document.querySelector("#numberInput"),
+      expiry: document.querySelector("#expiryInput"),
+      brand: document.querySelector("#brandInput"),
+      cvv: document.querySelector("#cvvInput"),
+      nickname: document.querySelector("#nicknameInput")
+    };
+
+    const preview = {
+      holder: document.querySelector("#cardHolder"),
+      number: document.querySelector("#cardNumber"),
+      expiry: document.querySelector("#cardExpiry"),
+      brand: document.querySelector("#frontBrand"),
+      cvv: document.querySelector("#cardCvv"),
+      nickname: document.querySelector("#cardNickname")
+    };
+
+    const rotator = document.querySelector("#cardRotator");
+    const flipButton = document.querySelector("#flipButton");
+
+    function formatCardNumber(value) {
+      const digits = value.replace(/\D/g, "").slice(0, 16);
+      return digits.replace(/(\d{4})(?=\d)/g, "$1 ");
+    }
+
+    function formatExpiry(value) {
+      const digits = value.replace(/\D/g, "").slice(0, 4);
+      return digits.length > 2 ? `${digits.slice(0, 2)}/${digits.slice(2)}` : digits;
+    }
+
+    function updatePreview() {
+      const number = formatCardNumber(fields.number.value);
+      const expiry = formatExpiry(fields.expiry.value);
+      const cvv = fields.cvv.value.replace(/\D/g, "").slice(0, 3);
+
+      fields.number.value = number;
+      fields.expiry.value = expiry;
+      fields.cvv.value = cvv;
+
+      preview.holder.textContent = fields.holder.value.trim() || "NOME DO TITULAR";
+      preview.number.textContent = number || "0000 0000 0000 0000";
+      preview.expiry.textContent = expiry || "MM/AA";
+      preview.brand.textContent = fields.brand.value.toUpperCase();
+      preview.cvv.textContent = cvv || "•••";
+      preview.nickname.textContent = fields.nickname.value.trim() || "Seu cartão";
+    }
+
+    Object.values(fields).forEach((field) => {
+      field.addEventListener("input", updatePreview);
+      field.addEventListener("change", updatePreview);
+    });
+
+    flipButton.addEventListener("click", () => {
+      const flipped = rotator.classList.toggle("is-flipped");
+      flipButton.setAttribute("aria-pressed", String(flipped));
+      flipButton.setAttribute("aria-label", flipped ? "Mostrar frente do cartão" : "Mostrar verso do cartão");
+    });
+
+    function randomDigits(length) {
+      return Array.from({ length }, () => Math.floor(Math.random() * 10)).join("");
+    }
+
+    function generateDemoNumber() {
+      const firstFifteen = `0000${randomDigits(11)}`;
+      const checkDigit = firstFifteen.split("").reverse().reduce((sum, digit, index) => {
+        let value = Number(digit);
+        if (index % 2 === 0) {
+          value *= 2;
+          if (value > 9) value -= 9;
+        }
+        return sum + value;
+      }, 0);
+      const validCheckDigit = (10 - (checkDigit % 10)) % 10;
+      const invalidCheckDigit = (validCheckDigit + 1 + Math.floor(Math.random() * 9)) % 10;
+      return `${firstFifteen}${invalidCheckDigit}`;
+    }
+
+    document.querySelector("#generateButton").addEventListener("click", () => {
+      const names = ["Alex Silva", "Camila Rocha", "Rafa Lima", "Jo Costa"];
+      const brands = ["Genérico", "Visa", "Mastercard", "Elo"];
+      const month = String(Math.floor(Math.random() * 12) + 1).padStart(2, "0");
+      const year = String((new Date().getFullYear() + 1 + Math.floor(Math.random() * 5)) % 100).padStart(2, "0");
+
+      fields.holder.value = names[Math.floor(Math.random() * names.length)];
+      fields.number.value = generateDemoNumber();
+      fields.expiry.value = `${month}/${year}`;
+      fields.brand.value = brands[Math.floor(Math.random() * brands.length)];
+      fields.cvv.value = randomDigits(3);
+      fields.nickname.value = ["Cartão viagem", "Meu dia a dia", "Compras online"][Math.floor(Math.random() * 3)];
+      updatePreview();
+    });
+
+    document.querySelector("#clearButton").addEventListener("click", () => {
+      fields.holder.value = "";
+      fields.number.value = "";
+      fields.expiry.value = "";
+      fields.brand.value = "Genérico";
+      fields.cvv.value = "";
+      fields.nickname.value = "";
+      updatePreview();
+    });
+
+    updatePreview();
+  </script>
+
+
+</body></html>
